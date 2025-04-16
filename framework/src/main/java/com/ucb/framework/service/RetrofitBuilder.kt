@@ -9,7 +9,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 class RetrofitBuilder(
     val context: Context,
 ) {
-    private fun getRetrofit(): Retrofit {
+    private fun getRetrofit(url: String): Retrofit {
         val client =
             OkHttpClient
                 .Builder()
@@ -19,31 +19,18 @@ class RetrofitBuilder(
         return Retrofit
             .Builder()
             .addConverterFactory(MoshiConverterFactory.create())
-            .baseUrl(Companion.BASE_URL)
+            .baseUrl(url)
             .client(client)
             .build()
     }
 
-    private fun getRetrofit2(): Retrofit {
-        val client =
-            OkHttpClient
-                .Builder()
-                .addInterceptor(ChuckerInterceptor.Builder(context).build())
-                .build()
-
-        return Retrofit
-            .Builder()
-            .addConverterFactory(MoshiConverterFactory.create())
-            .baseUrl(Companion.BASE_URL_MOVIES)
-            .client(client)
-            .build()
-    }
-
-    val apiService: IApiService = getRetrofit().create(IApiService::class.java)
-    val apiMovieService: IApiService = getRetrofit2().create(IApiService::class.java)
+    val apiService: IApiService = getRetrofit(BASE_URL).create(IApiService::class.java)
+    val bookService: IApiBookService = getRetrofit(BASE_URL_BOOK).create(IApiBookService::class.java)
+    // val movieService: IMovieApiService = getRetrofit(BASE_URL_MOVIES).create(IMovieApiService::class.java)
 
     companion object {
         private const val BASE_URL = "https://api.github.com"
-        private const val BASE_URL_MOVIES = "https://api.themoviedb.org"
+        private const val BASE_URL_BOOK = "https://openlibrary.org/"
+        // private const val BASE_URL_MOVIES = "https://api.themoviedb.org"
     }
 }
