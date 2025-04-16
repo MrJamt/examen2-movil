@@ -1,3 +1,4 @@
+
 @file:Suppress("ktlint:standard:no-wildcard-imports")
 
 package com.ucb.ucbtest.book
@@ -6,6 +7,8 @@ import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.*
@@ -14,28 +17,62 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.ucb.domain.Book
+import com.ucb.ucbtest.navigation.Screen
 
 @Suppress("ktlint:standard:function-naming")
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
-fun BookUI(bookViewModel: BookViewModel = hiltViewModel()) {
+fun BookUI(
+    bookViewModel: BookViewModel = hiltViewModel(),
+    navController: NavController,
+) {
     val context = LocalContext.current
     val state = bookViewModel.state.value
     val (query, setQuery) = remember { mutableStateOf("") }
+    val focusManager = LocalFocusManager.current
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Text(text = "Search Books", style = MaterialTheme.typography.headlineSmall)
+        Row(
+            horizontalArrangement = Arrangement.End,
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Button(onClick = {
+                navController.navigate(Screen.SavedBooksScreen.route)
+            }) {
+                Text("Favoritos")
+            }
+        }
+
+        Text(text = "Buscar Libros", style = MaterialTheme.typography.headlineSmall)
         Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
             value = query,
             onValueChange = setQuery,
-            label = { Text("Enter book title") },
+            label = { Text("Ingresa el titulo de un libro") },
             modifier = Modifier.fillMaxWidth(),
+            singleLine = true,
+            keyboardOptions =
+                KeyboardOptions.Default.copy(
+                    imeAction = ImeAction.Search,
+                ),
+            keyboardActions =
+                KeyboardActions(
+                    onSearch = {
+                        focusManager.clearFocus()
+                        if (query.isNotBlank()) {
+                            bookViewModel.searchBooks(query)
+                        } else {
+                            Toast.makeText(context, "Por favor ingresa el titulo de un libro", Toast.LENGTH_SHORT).show()
+                        }
+                    },
+                ),
         )
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -45,12 +82,12 @@ fun BookUI(bookViewModel: BookViewModel = hiltViewModel()) {
                 if (query.isNotBlank()) {
                     bookViewModel.searchBooks(query)
                 } else {
-                    Toast.makeText(context, "Please enter a query", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Por favor ingresa el titulo de un libro", Toast.LENGTH_SHORT).show()
                 }
             },
             modifier = Modifier.fillMaxWidth(),
         ) {
-            Text("Search")
+            Text("Buscar")
         }
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -61,10 +98,16 @@ fun BookUI(bookViewModel: BookViewModel = hiltViewModel()) {
             }
 
             is BookViewModel.BookUIState.Loaded -> {
-                BookList(books = state.books) { book ->
-                    bookViewModel.saveBook(book)
-                    Toast.makeText(context, "Book saved", Toast.LENGTH_SHORT).show()
-                }
+                BookList(
+                    books = state.books,
+                    onSave = { book ->
+                        bookViewModel.saveBook(book)
+                        Toast.makeText(context, "Libro guardado en favoritos!", Toast.LENGTH_SHORT).show()
+                    },
+                    onBookClick = { book ->
+                        Toast.makeText(context, "Clic en ${book.title}", Toast.LENGTH_SHORT).show()
+                    },
+                )
             }
 
             is BookViewModel.BookUIState.Error -> {
@@ -79,6 +122,7 @@ fun BookUI(bookViewModel: BookViewModel = hiltViewModel()) {
 fun BookList(
     books: List<Book>,
     onSave: (Book) -> Unit,
+    onBookClick: (Book) -> Unit,
 ) {
     Column {
         books.forEach { book ->
@@ -87,7 +131,7 @@ fun BookList(
                     Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp)
-                        .clickable { /* Optional: Show details */ },
+                        .clickable { onBookClick(book) },
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(16.dp),
@@ -95,21 +139,14 @@ fun BookList(
                 ) {
                     Column {
                         Text(book.title, style = MaterialTheme.typography.titleMedium)
-                        Text("By: ${book.authors.joinToString(", ")}")
-                        Text("Published: ${book.publishYear}")
+                        Text("Por: ${book.authors.joinToString(", ")}")
+                        Text("Publicado: ${book.publishYear}")
                     }
                     IconButton(onClick = { onSave(book) }) {
-                        Icon(Icons.Filled.Favorite, contentDescription = "Save")
+                        Icon(Icons.Filled.Favorite, contentDescription = "Guardar")
                     }
                 }
             }
         }
     }
-}
-
-@Suppress("ktlint:standard:function-naming")
-@Preview(showBackground = true)
-@Composable
-fun BookUIPreview() {
-    BookUI()
 }

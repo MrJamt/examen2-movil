@@ -22,4 +22,6 @@ sealed class Screen(
     object ExpenseIncomeScreen : Screen("expense_income_screen")
 
     object BookScreen : Screen("book_screen")
+
+    object SavedBooksScreen : Screen("saved_books_screen")
 }

@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ucb.ucbtest.book.BookUI
+import com.ucb.ucbtest.book.SavedBooksUI
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
@@ -22,7 +23,11 @@ fun AppNavigation() {
         popExitTransition = { ExitTransition.None },
     ) {
         composable(Screen.BookScreen.route) {
-            BookUI()
+            BookUI(navController = navController)
+        }
+
+        composable(Screen.SavedBooksScreen.route) {
+            SavedBooksUI()
         }
     }
 }
