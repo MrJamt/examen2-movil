@@ -4,9 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-class BookResponseDto(
-    @Json(name = "page")
-    val page: Int,
-    @Json(name = "results")
-    val results: List<BookDto>,
+data class BookResponseDto(
+    @Json(name = "docs")
+    val docs: List<BookDto>,
 )

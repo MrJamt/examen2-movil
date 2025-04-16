@@ -12,7 +12,7 @@ class BookRemoteDataSource(
     override suspend fun searchBooks(query: String): NetworkResult<List<Book>> {
         val response = retrofiService.bookService.searchBooks(query)
         if (response.isSuccessful) {
-            return NetworkResult.Success(response.body()!!.results.map { it.toModel() })
+            return NetworkResult.Success(response.body()!!.docs.map { it.toModel() })
         } else {
             return NetworkResult.Error(response.message())
         }

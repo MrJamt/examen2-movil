@@ -21,6 +21,6 @@ fun BookEntity.toModel(): Book =
 fun BookDto.toModel(): Book =
     Book(
         title = this.title,
-        authors = this.authors,
-        publishYear = this.publishYear,
+        authors = this.authors ?: emptyList(),
+        publishYear = this.publishYear ?: 0,
     )

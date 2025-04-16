@@ -30,7 +30,7 @@ class RetrofitBuilder(
 
     companion object {
         private const val BASE_URL = "https://api.github.com"
-        private const val BASE_URL_BOOK = "https://openlibrary.org/"
+        private const val BASE_URL_BOOK = "https://openlibrary.org"
         // private const val BASE_URL_MOVIES = "https://api.themoviedb.org"
     }
 }

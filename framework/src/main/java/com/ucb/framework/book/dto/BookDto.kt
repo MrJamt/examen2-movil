@@ -5,10 +5,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class BookDto(
-    @Json(name = "title")
-    val title: String,
-    @Json(name = "author_name")
-    val authors: List<String>,
-    @Json(name = "first_publish_year")
-    val publishYear: Int,
+    @Json(name = "title") val title: String = "",
+    @Json(name = "author_name") val authors: List<String>? = null,
+    @Json(name = "first_publish_year") val publishYear: Int? = null,
 )
