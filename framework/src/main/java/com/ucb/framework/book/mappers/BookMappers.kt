@@ -1,6 +1,7 @@
 package com.ucb.framework.book.mappers
 
 import com.ucb.domain.Book
+import com.ucb.framework.book.dto.BookDto
 import com.ucb.framework.book.entity.BookEntity
 
 fun Book.toEntity(): BookEntity =
@@ -14,5 +15,12 @@ fun BookEntity.toModel(): Book =
     Book(
         title = this.title,
         authors = this.authors.split(",").map { it.trim() },
+        publishYear = this.publishYear,
+    )
+
+fun BookDto.toModel(): Book =
+    Book(
+        title = this.title,
+        authors = this.authors,
         publishYear = this.publishYear,
     )

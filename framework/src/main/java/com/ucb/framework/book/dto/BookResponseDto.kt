@@ -8,5 +8,5 @@ class BookResponseDto(
     @Json(name = "page")
     val page: Int,
     @Json(name = "results")
-    val results: List<MovieDto>,
+    val results: List<BookDto>,
 )

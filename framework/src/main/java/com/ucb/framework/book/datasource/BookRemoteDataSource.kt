@@ -3,6 +3,7 @@ package com.ucb.framework.book.datasource
 import com.ucb.data.NetworkResult
 import com.ucb.data.book.IBookRemoteDataSource
 import com.ucb.domain.Book
+import com.ucb.framework.book.mappers.toModel
 import com.ucb.framework.service.RetrofitBuilder
 
 class BookRemoteDataSource(

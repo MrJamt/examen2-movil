@@ -22,6 +22,8 @@ retrofitCoroutines = "0.9.2"
 detekt = "1.23.8"
 room = "2.6.1"
 roomCommon = "2.6.1"
+navigation = "2.8.3"
+hiltNavViewModel = "1.1.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -59,6 +61,8 @@ room-guava = {module="androidx.room:room-guava", version.ref="room"}
 room-paging = { module="androidx.room:room-paging", version.ref="room"}
 room-testing = { module="androidx.room:room-testing", version.ref="room"}
 room-compiler = { group="androidx.room", name="room-compiler", version.ref="room"}
+navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation"}
+hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref="hiltNavViewModel"}
 
 #networking
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref= "retrofit"}
