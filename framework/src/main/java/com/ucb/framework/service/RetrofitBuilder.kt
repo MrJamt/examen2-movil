@@ -26,7 +26,6 @@ class RetrofitBuilder(
 
     val apiService: IApiService = getRetrofit(BASE_URL).create(IApiService::class.java)
     val bookService: IApiBookService = getRetrofit(BASE_URL_BOOK).create(IApiBookService::class.java)
-    // val movieService: IMovieApiService = getRetrofit(BASE_URL_MOVIES).create(IMovieApiService::class.java)
 
     companion object {
         private const val BASE_URL = "https://api.github.com"

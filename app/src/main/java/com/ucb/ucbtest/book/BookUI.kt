@@ -5,7 +5,6 @@ package com.ucb.ucbtest.book
 
 import android.annotation.SuppressLint
 import android.widget.Toast
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -37,15 +36,24 @@ fun BookUI(
     val (query, setQuery) = remember { mutableStateOf("") }
     val focusManager = LocalFocusManager.current
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+    Column(
+        modifier = Modifier.fillMaxSize().padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        Spacer(modifier = Modifier.height(20.dp))
+
         Row(
             horizontalArrangement = Arrangement.End,
             modifier = Modifier.fillMaxWidth(),
         ) {
-            Button(onClick = {
+            IconButton(onClick = {
                 navController.navigate(Screen.SavedBooksScreen.route)
             }) {
-                Text("Favoritos")
+                Icon(
+                    imageVector = Icons.Filled.Favorite,
+                    contentDescription = "Favoritos",
+                    tint = MaterialTheme.colorScheme.primary,
+                )
             }
         }
 
@@ -104,9 +112,6 @@ fun BookUI(
                         bookViewModel.saveBook(book)
                         Toast.makeText(context, "Libro guardado en favoritos!", Toast.LENGTH_SHORT).show()
                     },
-                    onBookClick = { book ->
-                        Toast.makeText(context, "Clic en ${book.title}", Toast.LENGTH_SHORT).show()
-                    },
                 )
             }
 
@@ -122,7 +127,7 @@ fun BookUI(
 fun BookList(
     books: List<Book>,
     onSave: (Book) -> Unit,
-    onBookClick: (Book) -> Unit,
+    showHeart: Boolean = true,
 ) {
     Column {
         books.forEach { book ->
@@ -130,8 +135,7 @@ fun BookList(
                 modifier =
                     Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 8.dp)
-                        .clickable { onBookClick(book) },
+                        .padding(vertical = 8.dp),
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth().padding(16.dp),
@@ -142,8 +146,10 @@ fun BookList(
                         Text("Por: ${book.authors.joinToString(", ")}")
                         Text("Publicado: ${book.publishYear}")
                     }
-                    IconButton(onClick = { onSave(book) }) {
-                        Icon(Icons.Filled.Favorite, contentDescription = "Guardar")
+                    if (showHeart) {
+                        IconButton(onClick = { onSave(book) }) {
+                            Icon(Icons.Filled.Favorite, contentDescription = "Guardar")
+                        }
                     }
                 }
             }
