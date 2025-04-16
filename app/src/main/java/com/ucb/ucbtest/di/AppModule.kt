@@ -1,19 +1,12 @@
 package com.ucb.ucbtest.di
 
 import android.content.Context
-import com.ucb.data.GithubRepository
 import com.ucb.data.book.BookRepository
 import com.ucb.data.book.IBookLocalDataSource
 import com.ucb.data.book.IBookRemoteDataSource
-import com.ucb.data.git.IGitRemoteDataSource
-import com.ucb.data.git.ILocalDataSource
 import com.ucb.framework.book.datasource.BookLocalDataSource
 import com.ucb.framework.book.datasource.BookRemoteDataSource
-import com.ucb.framework.github.GithubLocalDataSource
-import com.ucb.framework.github.GithubRemoteDataSource
 import com.ucb.framework.service.RetrofitBuilder
-import com.ucb.usecases.FindGitAlias
-import com.ucb.usecases.SaveGitalias
 import com.ucb.usecases.book.GetSavedBooks
 import com.ucb.usecases.book.SaveBook
 import com.ucb.usecases.book.SearchBooks
@@ -35,31 +28,6 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun gitRemoteDataSource(retrofiService: RetrofitBuilder): IGitRemoteDataSource = GithubRemoteDataSource(retrofiService)
-
-    @Provides
-    @Singleton
-    fun provideLocalDataSource(
-        @ApplicationContext context: Context,
-    ): ILocalDataSource = GithubLocalDataSource(context)
-
-    @Provides
-    @Singleton
-    fun gitRepository(
-        remoteDataSource: IGitRemoteDataSource,
-        localDataSource: ILocalDataSource,
-    ): GithubRepository = GithubRepository(remoteDataSource, localDataSource)
-
-    @Provides
-    @Singleton
-    fun provideSaveGitAlias(repository: GithubRepository): SaveGitalias = SaveGitalias(repository)
-
-    @Provides
-    @Singleton
-    fun provideGitUseCases(githubRepository: GithubRepository): FindGitAlias = FindGitAlias(githubRepository)
-
-    @Provides
-    @Singleton
     fun provideBookRemoteDataSource(retrofit: RetrofitBuilder): IBookRemoteDataSource = BookRemoteDataSource(retrofit)
 
     @Provides
@@ -72,26 +40,18 @@ object AppModule {
     @Singleton
     fun provideBookRepository(
         remoteDataSource: IBookRemoteDataSource,
-        localDataSource: IBookLocalDataSource
-    ): BookRepository {
-        return BookRepository(remoteDataSource, localDataSource)
-    }
+        localDataSource: IBookLocalDataSource,
+    ): BookRepository = BookRepository(remoteDataSource, localDataSource)
 
     @Provides
     @Singleton
-    fun provideSearchBooks(bookRepository: BookRepository): SearchBooks {
-        return SearchBooks(bookRepository)
-    }
+    fun provideSearchBooks(bookRepository: BookRepository): SearchBooks = SearchBooks(bookRepository)
 
     @Provides
     @Singleton
-    fun provideSaveBook(bookRepository: BookRepository): SaveBook {
-        return SaveBook(bookRepository)
-    }
+    fun provideSaveBook(bookRepository: BookRepository): SaveBook = SaveBook(bookRepository)
 
     @Provides
     @Singleton
-    fun provideGetSavedBooks(repository: BookRepository): GetSavedBooks {
-        return GetSavedBooks(repository)
-    }
+    fun provideGetSavedBooks(repository: BookRepository): GetSavedBooks = GetSavedBooks(repository)
 }
