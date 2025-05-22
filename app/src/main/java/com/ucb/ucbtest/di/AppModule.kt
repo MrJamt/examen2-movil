@@ -4,12 +4,16 @@ import android.content.Context
 import com.ucb.data.book.BookRepository
 import com.ucb.data.book.IBookLocalDataSource
 import com.ucb.data.book.IBookRemoteDataSource
+import com.ucb.data.plan.IPlanLocalDataSource
+import com.ucb.data.plan.PlanRepository
 import com.ucb.framework.book.datasource.BookLocalDataSource
 import com.ucb.framework.book.datasource.BookRemoteDataSource
+import com.ucb.framework.plan.datasource.PlanRemoteDataSource
 import com.ucb.framework.service.RetrofitBuilder
 import com.ucb.usecases.book.GetSavedBooks
 import com.ucb.usecases.book.SaveBook
 import com.ucb.usecases.book.SearchBooks
+import com.ucb.usecases.plan.GetPlans
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -54,4 +58,18 @@ object AppModule {
     @Provides
     @Singleton
     fun provideGetSavedBooks(repository: BookRepository): GetSavedBooks = GetSavedBooks(repository)
+
+    @Provides
+    @Singleton
+    fun providePlanLocalDataSource(
+        @ApplicationContext context: Context,
+    ): IPlanLocalDataSource = PlanRemoteDataSource(context)
+
+    @Provides
+    @Singleton
+    fun providePlanRepository(localDataSource: IPlanLocalDataSource): PlanRepository = PlanRepository(localDataSource)
+
+    @Provides
+    @Singleton
+    fun provideGetPlans(planRepository: PlanRepository): GetPlans = GetPlans(planRepository)
 }
