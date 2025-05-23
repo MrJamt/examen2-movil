@@ -2,7 +2,10 @@
 
 package com.ucb.ucbtest.plan
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
@@ -12,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -239,6 +243,7 @@ fun HomeUI(viewModel: HomeViewModel = hiltViewModel()) {
             }
         }
     }
+    WhatsAppFloatingIcon()
 }
 
 @Suppress("ktlint:standard:function-naming")
@@ -276,5 +281,34 @@ fun SocialIconsRow() {
                 )
             }
         }
+    }
+}
+
+@Composable
+fun WhatsAppFloatingIcon() {
+    val context = LocalContext.current
+    val message = "Hola, UCB mobile, preciso su ayuda"
+    val phoneNumber = "+59175482448" // sin espacios
+    val url = "https://wa.me/59175482448?text=${Uri.encode(message)}"
+
+    Box(
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+        contentAlignment = Alignment.BottomEnd,
+    ) {
+        Icon(
+            imageVector = Iconos.AllIconsNamed["whatsappgreen"]!!,
+            contentDescription = "WhatsApp",
+            modifier =
+                Modifier
+                    .size(56.dp)
+                    .clickable {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                        context.startActivity(intent)
+                    },
+            tint = Color.Unspecified, // Usa el color original del vector
+        )
     }
 }
