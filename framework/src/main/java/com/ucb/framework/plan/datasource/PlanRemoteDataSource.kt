@@ -10,7 +10,7 @@ class PlanRemoteDataSource(
     override suspend fun getPlans(): List<Plan> =
         listOf(
             Plan(5, 270, 199, 5),
-            Plan(6, 300, 229, 6),
-            Plan(7, 350, 259, 7),
+            Plan(8, 370, 299, 8),
+            Plan(10, 470, 399, 10),
         )
 }
