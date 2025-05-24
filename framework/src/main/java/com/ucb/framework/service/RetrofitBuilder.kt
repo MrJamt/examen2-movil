@@ -23,10 +23,4 @@ class RetrofitBuilder(
             .client(client)
             .build()
     }
-
-    val bookService: IApiBookService = getRetrofit(BASE_URL_BOOK).create(IApiBookService::class.java)
-
-    companion object {
-        private const val BASE_URL_BOOK = "https://openlibrary.org"
-    }
 }

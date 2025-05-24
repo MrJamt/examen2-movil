@@ -6,8 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.ucb.ucbtest.book.BookUI
-import com.ucb.ucbtest.book.SavedBooksUI
 import com.ucb.ucbtest.plan.HomeUI
 import com.ucb.ucbtest.sendSIMUI.SendSimUI
 
@@ -24,20 +22,12 @@ fun AppNavigation() {
         popEnterTransition = { EnterTransition.None },
         popExitTransition = { ExitTransition.None },
     ) {
-        composable(Screen.BookScreen.route) {
-            BookUI(navController = navController)
-        }
-
         composable(Screen.HomeUIScreen.route) {
             HomeUI(navController = navController)
         }
 
         composable(Screen.SendSimUI.route) {
             SendSimUI(navController = navController)
-        }
-
-        composable(Screen.SavedBooksScreen.route) {
-            SavedBooksUI()
         }
     }
 }
