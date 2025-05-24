@@ -18,7 +18,7 @@ fun AppNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.SendSimUI.route,
+        startDestination = Screen.HomeUIScreen.route,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
@@ -33,7 +33,7 @@ fun AppNavigation() {
         }
 
         composable(Screen.SendSimUI.route) {
-            SendSimUI()
+            SendSimUI(navController = navController)
         }
 
         composable(Screen.SavedBooksScreen.route) {

@@ -269,7 +269,7 @@ fun SocialIconsRow() {
         modifier =
             Modifier
                 .fillMaxWidth()
-                .padding(top = 12.dp),
+                .padding(top = 12.dp, bottom = 20.dp),
         horizontalArrangement = Arrangement.Center,
     ) {
         orderedIcons.forEach { name ->
@@ -289,6 +289,7 @@ fun SocialIconsRow() {
     }
 }
 
+@Suppress("ktlint:standard:function-naming")
 @Composable
 fun WhatsAppFloatingIcon() {
     val context = LocalContext.current

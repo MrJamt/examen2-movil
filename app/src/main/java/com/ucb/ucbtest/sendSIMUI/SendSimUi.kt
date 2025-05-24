@@ -1,5 +1,6 @@
 package com.ucb.ucbtest.sendSIMUI
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,7 +13,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -28,16 +30,21 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.rememberCameraPositionState
 import com.ucb.ucbtest.R
+import com.ucb.ucbtest.navigation.Screen
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
-fun SendSimUI(viewModel: SendSimViewModel = hiltViewModel()) {
+fun SendSimUI(
+    viewModel: SendSimViewModel = hiltViewModel(),
+    navController: NavController,
+) {
     val context = LocalContext.current
     val referencePhone = viewModel.referencePhone
     val latitude = viewModel.latitude
@@ -60,8 +67,8 @@ fun SendSimUI(viewModel: SendSimViewModel = hiltViewModel()) {
                 .fillMaxSize()
                 .padding(16.dp),
     ) {
-        Text("Donde enviaremos tu SIM", fontSize = 24.sp, fontWeight = FontWeight.Bold)
-        Divider(modifier = Modifier.padding(vertical = 8.dp), color = Color.Black)
+        Text("Donde enviaremos tu SIM", fontSize = 24.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(top = 30.dp))
+        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = Color.Black)
 
         OutlinedTextField(
             value = referencePhone.value,
@@ -119,8 +126,12 @@ fun SendSimUI(viewModel: SendSimViewModel = hiltViewModel()) {
         Spacer(Modifier.height(16.dp))
 
         Button(
-            onClick = { /* continuar lógica */ },
+            onClick = {
+                Toast.makeText(context, "Envío confirmado", Toast.LENGTH_SHORT).show()
+                navController.navigate(Screen.HomeUIScreen.route)
+            },
             modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF7062)),
         ) {
             Text("Continuar")
         }
