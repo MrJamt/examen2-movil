@@ -24,6 +24,8 @@ room = "2.6.1"
 roomCommon = "2.6.1"
 navigation = "2.8.3"
 hiltNavViewModel = "1.1.0"
+playServicesMaps = "19.2.0"
+maps_compose = "2.11.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -72,7 +74,8 @@ moshi-ksp = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", versi
 converter-moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref= "retrofit"}
 retrofit-coroutines = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlin-coroutines-adapter", version.ref= "retrofitCoroutines"}
 androidx-room-common = { group = "androidx.room", name = "room-common", version.ref = "roomCommon" }
-
+google-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
+maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "maps_compose" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

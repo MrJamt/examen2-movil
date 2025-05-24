@@ -47,6 +47,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.google.maps)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -59,6 +60,8 @@ dependencies {
     debugImplementation(libs.leakcanary.android)
     implementation(libs.navigation.compose)
     implementation(libs.hilt.navigation)
+    implementation(libs.maps.compose)
+    implementation(libs.google.maps)
 
     implementation(libs.kotlinx.coroutines.core) // Para Flow
     implementation(libs.coil)

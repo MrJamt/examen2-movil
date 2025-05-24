@@ -8,4 +8,6 @@ sealed class Screen(
     object SavedBooksScreen : Screen("saved_books_screen")
 
     object HomeUIScreen : Screen("home_ui_screen")
+
+    object SendSimUI : Screen("send_sim_ui")
 }

@@ -9,6 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import com.ucb.ucbtest.book.BookUI
 import com.ucb.ucbtest.book.SavedBooksUI
 import com.ucb.ucbtest.plan.HomeUI
+import com.ucb.ucbtest.sendSIMUI.SendSimUI
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
@@ -17,7 +18,7 @@ fun AppNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.HomeUIScreen.route,
+        startDestination = Screen.SendSimUI.route,
         enterTransition = { EnterTransition.None },
         exitTransition = { ExitTransition.None },
         popEnterTransition = { EnterTransition.None },
@@ -28,7 +29,11 @@ fun AppNavigation() {
         }
 
         composable(Screen.HomeUIScreen.route) {
-            HomeUI()
+            HomeUI(navController = navController)
+        }
+
+        composable(Screen.SendSimUI.route) {
+            SendSimUI()
         }
 
         composable(Screen.SavedBooksScreen.route) {

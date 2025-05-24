@@ -22,12 +22,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.ucb.ucbtest.R
+import com.ucb.ucbtest.navigation.Screen
 import com.ucb.ucbtest.plan.HomeViewModel
 
 @Suppress("ktlint:standard:function-naming")
 @Composable
-fun HomeUI(viewModel: HomeViewModel = hiltViewModel()) {
+fun HomeUI(
+    viewModel: HomeViewModel = hiltViewModel(),
+    navController: NavController,
+) {
     val state by viewModel.state.collectAsState()
     var currentIndex by remember { mutableStateOf(0) }
 
@@ -190,7 +195,7 @@ fun HomeUI(viewModel: HomeViewModel = hiltViewModel()) {
                                 SocialIconsRow()
 
                                 Button(
-                                    onClick = { /* Acción del botón */ },
+                                    onClick = { navController.navigate(Screen.SendSimUI.route) },
                                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF6D6D)),
                                     modifier = Modifier.fillMaxWidth(),
                                 ) {
